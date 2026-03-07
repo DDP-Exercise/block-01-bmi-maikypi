@@ -6,11 +6,11 @@
  *     given by the user. It should generate a textbased representation like the following:
  *
  *     -----------------------------------------------------
- *     Name:		         :LAST NAME:, :First name:
+ *     Name:		         :PICHLER:, :Michaela:
  *     -----------------------------------------------------
- *     Age:                  :age: Years
- *     Height:		         :size:m (i.e. 1,81m)
- *     Weight:	             :weight: kg
+ *     Age:                  :32: Years
+ *     Height:		         :1.67m: (i.e. 1,81m)
+ *     Weight:	             :54: kg
  *     Basal Metabolic Rate: <bmr> kcal
  *     Body Mass Index:	     <bmi>
  *     Normal Weight:        <Yes/No>
@@ -20,7 +20,7 @@
  *     To do so, collect data from your users. Values within :colons: are (formatted) user-inputs;
  *     values within <angle brackets> have to be calculated by your software.
  *
- *     You - 2026-03-05
+ *     MaikyPi - 2026-03-05
  *******************************************************/
 
 /*
@@ -28,8 +28,49 @@
  * Make sure, to help your users understand what they need to type in, by using clear prompt-instructions.
  */
 
+const LAST_NAME = prompt("What is your Last name?");
+const FIRST_NAME = prompt("What is your First Name?");
+const AGE = Number(prompt("What is your Age?"));
+const HEIGHT = Number(prompt("How tall are you (in cm)?"));
+const WEIGHT = Number(prompt("How much do you weight? (in kg)?"));
+
+
+let gender = "";
+do {
+    gender = prompt("What is your gender?");
+} while (gender.toLowerCase() != "male" && gender.toLowerCase() != "female");
+
+
 const LINE = "-----------------------------------------------------";
 let bmr, bmi, normal, danger;
+
+if (gender.toLowerCase() == "female") {
+    bmr = 655 + 10 * WEIGHT + 2 * HEIGHT - 6 * AGE;
+} else if (gender.toLowerCase() == "male")
+{
+    bmr = 66 + 14 * WEIGHT + 5 * HEIGHT - 7 * AGE;
+}
+
+bmi = ((10000*WEIGHT) / HEIGHT**2)
+
+normal = (bmi >=18 && bmi <= 25);
+danger = (bmi < 16 || bmi >=30);
+
+console.log(LINE);
+console.log("Name:".padEnd(22) + LAST_NAME.toUpperCase() + ", "+ FIRST_NAME);
+console.log(LINE);
+
+console.log("Age:".padEnd(22) + AGE + " Years");
+console.log("Height:".padEnd(22) + (HEIGHT / 100) + " m");
+console.log("Weight:".padEnd(22) + WEIGHT + " kg");
+
+console.log("Basal Metabolic Rate:".padEnd(22) + bmr + " kcal");
+console.log("Body Mass Index:".padEnd(22) + bmi);
+
+console.log("Normal Weight:".padEnd(22) + (normal ? "Yes" : "No"));
+console.log("Danger:".padEnd(22) + (danger ? "Yes" : "No"));
+
+
 
 /**
  * Formulas:
